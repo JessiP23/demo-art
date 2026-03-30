@@ -56,7 +56,7 @@ export default function RoomPreviewPage() {
                     if (nextUrl) setRoomImageUrl(nextUrl);
                   }}
                 />
-                <p className="text-xs text-black/60 dark:text-white/60">
+                <p className="text-xs text-black/60">
                   Uploadthing handles room image transfer. Then run AI preview.
                 </p>
                 <Button onClick={runPreview} disabled={loading}>
@@ -71,7 +71,7 @@ export default function RoomPreviewPage() {
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-black/10">
                   <Image src={roomPreview} alt="Room preview" fill className="object-cover" />
                 </div>
-                <p className="text-sm text-black/70 dark:text-white/70">
+                <p className="text-sm text-black/70">
                   Artwork: {artwork.title} by {artwork.artist}
                 </p>
               </CardContent>

@@ -56,7 +56,7 @@ export default function OnboardPage() {
       >
         <Card className="mx-auto w-full max-w-2xl">
           <CardContent className="space-y-5">
-            <p className="text-xs uppercase tracking-[0.18em] text-black/55 dark:text-white/55">
+            <p className="text-xs uppercase tracking-[0.18em] text-black/55">
               Dimension {index + 1} of {tasteDimensions.length}
             </p>
             <motion.div
@@ -67,7 +67,7 @@ export default function OnboardPage() {
               className="rounded-2xl border border-black/10 p-5"
             >
               <h2 className="text-2xl font-semibold tracking-tight">{labels[dimension]}</h2>
-              <p className="mt-2 text-sm text-black/65 dark:text-white/65">
+              <p className="mt-2 text-sm text-black/65">
                 Current intensity: {values[dimension]} / 100
               </p>
               <div className="mt-4 flex gap-2">

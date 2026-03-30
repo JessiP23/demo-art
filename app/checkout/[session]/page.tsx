@@ -79,7 +79,7 @@ function CheckoutPageContent() {
           <Card className="mx-auto w-full max-w-xl">
             <CardContent className="space-y-4">
               <div>
-                <p className="text-sm text-black/60 dark:text-white/60">{artwork.artist}</p>
+                <p className="text-sm text-black/60">{artwork.artist}</p>
                 <h2 className="text-2xl font-semibold">{artwork.title}</h2>
               </div>
               <div className="space-y-1 text-sm">

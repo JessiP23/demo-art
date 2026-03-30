@@ -34,7 +34,7 @@ export default function RecommendationsPage() {
         {!user?.taste_profile ? (
           <Card>
             <CardContent className="flex flex-wrap items-center justify-between gap-3">
-              <p className="text-sm text-black/70 dark:text-white/70">
+              <p className="text-sm text-black/70">
                 Complete onboarding to unlock personalized recommendations.
               </p>
               <Link href="/onboard">
@@ -76,7 +76,7 @@ export default function RecommendationsPage() {
           })}
         </div>
         {recommendationsQuery.data?.length === 0 && user?.taste_profile ? (
-          <p className="text-sm text-black/60 dark:text-white/60">No matches yet. Refreshing taste profile helps.</p>
+          <p className="text-sm text-black/60">No matches yet. Refreshing taste profile helps.</p>
         ) : null}
       </PageShell>
     </AuthGuard>
@@ -106,7 +106,7 @@ function RecommendationCard({
         </div>
         <div>
           <h3 className="text-lg font-semibold">{artwork.title}</h3>
-          <p className="text-sm text-black/65 dark:text-white/65">{artwork.artist}</p>
+          <p className="text-sm text-black/65">{artwork.artist}</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <Badge className="normal-case tracking-normal">Match {match}%</Badge>
@@ -114,7 +114,7 @@ function RecommendationCard({
             {currency(artwork.price_range[0])}–{currency(artwork.price_range[1])}
           </Badge>
         </div>
-        <p className="text-sm text-black/70 dark:text-white/70">{rationale}</p>
+        <p className="text-sm text-black/70">{rationale}</p>
         <div className="flex flex-wrap gap-2">
           <Link href={`/artwork/${artwork.id}`}>
             <Button size="sm">Open detail</Button>

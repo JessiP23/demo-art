@@ -65,7 +65,7 @@ function ProfilePageContent() {
             <CardContent className="space-y-4">
               <h2 className="text-xl font-semibold">Saved works</h2>
               {savedArtworks.length === 0 ? (
-                <p className="text-sm text-black/60 dark:text-white/60">
+                <p className="text-sm text-black/60">
                   No saved works yet. Explore recommendations to curate your shortlist.
                 </p>
               ) : null}
@@ -73,7 +73,7 @@ function ProfilePageContent() {
                 <div key={artwork.id} className="flex items-center justify-between rounded-2xl border border-black/10 p-3">
                   <div>
                     <p className="font-medium">{artwork.title}</p>
-                    <p className="text-sm text-black/60 dark:text-white/60">{artwork.artist}</p>
+                    <p className="text-sm text-black/60">{artwork.artist}</p>
                   </div>
                   <Link href={`/artwork/${artwork.id}`}>
                     <Button size="sm" variant="secondary">
@@ -101,10 +101,10 @@ function ProfilePageContent() {
                     : "Upgrade to Pro"}
               </Button>
               {subscriptionStatus ? (
-                <p className="text-xs text-black/60 dark:text-white/60">Subscription: {subscriptionStatus}</p>
+                <p className="text-xs text-black/60">Subscription: {subscriptionStatus}</p>
               ) : null}
               {purchaseStatus ? (
-                <p className="text-xs text-black/60 dark:text-white/60">Purchase: {purchaseStatus}</p>
+                <p className="text-xs text-black/60">Purchase: {purchaseStatus}</p>
               ) : null}
             </CardContent>
           </Card>
@@ -118,7 +118,7 @@ function ProfilePageContent() {
               return (
                 <div key={transaction.id} className="rounded-2xl border border-black/10 p-3 text-sm">
                   <p className="font-medium">{artwork?.title ?? transaction.artwork_id}</p>
-                  <p className="text-black/60 dark:text-white/60">
+                  <p className="text-black/60">
                     Amount {currency(transaction.amount)} · Commission {currency(transaction.commission)}
                   </p>
                 </div>

@@ -78,7 +78,7 @@ export default function ConciergePage() {
                 return (
                   <div key={request.id} className="rounded-2xl border border-black/10 p-3">
                     <p className="text-sm font-medium">{artwork?.title ?? request.artwork_id}</p>
-                    <p className="mt-1 text-xs text-black/60 dark:text-white/60">{request.note}</p>
+                    <p className="mt-1 text-xs text-black/60">{request.note}</p>
                     <div className="mt-2">
                       <Badge className="normal-case tracking-normal">{request.status}</Badge>
                     </div>

@@ -149,7 +149,7 @@ function Metric({ label, value }: { label: string; value: string | number }) {
   return (
     <Card>
       <CardContent className="p-4">
-        <p className="text-xs uppercase tracking-[0.14em] text-black/55 dark:text-white/55">{label}</p>
+        <p className="text-xs uppercase tracking-[0.14em] text-black/55">{label}</p>
         <p className="mt-2 text-2xl font-semibold">{value}</p>
       </CardContent>
     </Card>

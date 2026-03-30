@@ -35,11 +35,11 @@ export default function ArtworkDetailPage() {
             <Card>
               <CardContent className="space-y-4">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.16em] text-black/55 dark:text-white/55">
+                  <p className="text-xs uppercase tracking-[0.16em] text-black/55">
                     {artwork.artist}
                   </p>
                   <h2 className="mt-2 text-3xl font-semibold tracking-tight">{artwork.title}</h2>
-                  <p className="mt-1 text-sm text-black/65 dark:text-white/65">
+                  <p className="mt-1 text-sm text-black/65">
                     {artwork.medium} · {artwork.dimensions} · {artwork.year}
                   </p>
                 </div>
@@ -56,14 +56,14 @@ export default function ArtworkDetailPage() {
                 </div>
                 <div className="rounded-2xl border border-black/10 p-4">
                   <p className="text-sm font-medium">Fair Value Engine</p>
-                  <p className="mt-2 text-sm text-black/70 dark:text-white/70">
+                  <p className="mt-2 text-sm text-black/70">
                     Estimated fair range {currency(fairValue?.low ?? 0)}–{currency(fairValue?.high ?? 0)}
                   </p>
-                  <p className="mt-2 text-sm text-black/70 dark:text-white/70">{artwork.auction_comp}</p>
+                  <p className="mt-2 text-sm text-black/70">{artwork.auction_comp}</p>
                 </div>
                 <div className="rounded-2xl border border-black/10 p-4">
                   <p className="text-sm font-medium">Explainable rationale</p>
-                  <ul className="mt-2 space-y-2 text-sm text-black/70 dark:text-white/70">
+                  <ul className="mt-2 space-y-2 text-sm text-black/70">
                     {artwork.rationale.map((reason) => (
                       <li key={reason}>• {reason}</li>
                     ))}

@@ -15,7 +15,7 @@ export function PageShell({
         <div>
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h1>
           {subtitle ? (
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-black/65 dark:text-white/65">{subtitle}</p>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-black/65">{subtitle}</p>
           ) : null}
         </div>
         {action}

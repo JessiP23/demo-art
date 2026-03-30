@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ThemeToggle } from "./theme-toggle";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/stores/auth-store";
@@ -31,8 +30,8 @@ export function SiteHeader() {
               key={item.href}
               href={item.href}
               className={cn(
-                "text-xs uppercase tracking-[0.15em] text-black/60 transition hover:text-black dark:text-white/70 dark:hover:text-white",
-                pathname === item.href && "text-black dark:text-white",
+                "text-xs uppercase tracking-[0.15em] text-black/60 transition hover:text-black",
+                pathname === item.href && "text-black",
               )}
             >
               {item.label}
@@ -40,7 +39,6 @@ export function SiteHeader() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <ThemeToggle />
           {user ? (
             <Button variant="secondary" size="sm" onClick={logout}>
               Logout

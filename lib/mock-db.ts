@@ -43,7 +43,15 @@ export function readDB(): DB {
     window.localStorage.setItem(DB_KEY, JSON.stringify(starter));
     return starter;
   }
-  return JSON.parse(raw) as DB;
+  const stored = JSON.parse(raw) as DB;
+  const artworkMap = new Map(stored.artworks.map((artwork) => [artwork.id, artwork]));
+  for (const artwork of artworksSeed) {
+    if (!artworkMap.has(artwork.id)) {
+      stored.artworks.push(artwork);
+    }
+  }
+  window.localStorage.setItem(DB_KEY, JSON.stringify(stored));
+  return stored;
 }
 
 export function writeDB(db: DB) {

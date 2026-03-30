@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import type { Artwork } from "../lib/artmatch-data";
 
 type RecommendationGridProps = {
@@ -52,15 +53,23 @@ export function RecommendationGrid({
                   : "border-black/10 bg-white hover:border-black/30"
               }`}
             >
-              <div
-                className={`aspect-[4/5] rounded-xl bg-gradient-to-br ${artwork.gradient} ${
-                  active ? "ring-1 ring-white/30" : "ring-1 ring-black/8"
-                }`}
-              />
+              <div className="relative aspect-[4/5] overflow-hidden rounded-xl">
+                <Image
+                  src={artwork.image}
+                  alt={`${artwork.title} by ${artwork.artist}`}
+                  fill
+                  className={`object-cover transition duration-500 ${
+                    active ? "scale-[1.02]" : "group-hover:scale-[1.03]"
+                  }`}
+                />
+              </div>
               <div className="space-y-1">
                 <p className="text-base font-medium">{artwork.title}</p>
                 <p className={`text-sm ${active ? "text-white/75" : "text-black/65"}`}>
                   {artwork.artist} · {artwork.year}
+                </p>
+                <p className={`text-xs leading-5 ${active ? "text-white/70" : "text-black/60"}`}>
+                  {artwork.conciseReason}
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-2 text-xs">

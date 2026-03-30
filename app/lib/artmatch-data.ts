@@ -4,6 +4,7 @@ export type TasteProfile = {
   mood: string;
   budgetBand: string;
   roomType: string;
+  style: string;
 };
 
 export type Artwork = {
@@ -18,7 +19,9 @@ export type Artwork = {
   fairValueHigh: number;
   fairValueScore: number;
   matchScore: number;
-  gradient: string;
+  image: string;
+  conciseReason: string;
+  artistMomentum: string;
   whyItMatches: string[];
   fairValueRationale: string[];
   roomFit: string;
@@ -29,12 +32,24 @@ export type MarketMetric = {
   value: string;
 };
 
+export type Option = {
+  label: string;
+  value: string;
+};
+
+export type CompetitiveRow = {
+  category: string;
+  artmatch: string;
+  incumbents: string;
+};
+
 export const defaultTasteProfile: TasteProfile = {
   collectorType: "HENRY buyer",
   palette: "Warm neutrals",
   mood: "Calm but modern",
   budgetBand: "$12k–$30k",
   roomType: "Living room",
+  style: "Textural abstraction",
 };
 
 export const styleSignals = [
@@ -44,6 +59,32 @@ export const styleSignals = [
   "Museum-edition photography",
   "Textural canvas",
 ];
+
+export const styleOptions: Option[] = [
+  { label: "Textural abstraction", value: "Textural abstraction" },
+  { label: "Graphic figurative", value: "Graphic figurative" },
+  { label: "Chromatic statement", value: "Chromatic statement" },
+];
+
+export const paletteOptions: Option[] = [
+  { label: "Warm neutrals", value: "Warm neutrals" },
+  { label: "Monochrome calm", value: "Monochrome calm" },
+  { label: "Bold color energy", value: "Bold color energy" },
+];
+
+export const moodOptions: Option[] = [
+  { label: "Calm but modern", value: "Calm but modern" },
+  { label: "Expressive edge", value: "Expressive edge" },
+  { label: "Gallery minimal", value: "Gallery minimal" },
+];
+
+export const roomOptions: Option[] = [
+  { label: "Living room", value: "Living room" },
+  { label: "Dining room", value: "Dining room" },
+  { label: "Study", value: "Study" },
+];
+
+export const budgetBands = ["$5k–$12k", "$12k–$30k", "$30k–$50k"];
 
 export const artworks: Artwork[] = [
   {
@@ -58,7 +99,9 @@ export const artworks: Artwork[] = [
     fairValueHigh: 19100,
     fairValueScore: 92,
     matchScore: 95,
-    gradient: "from-stone-100 via-amber-50 to-zinc-200",
+    image: "/contour-ocre.png",
+    conciseReason: "Warm tonal layering and structured movement fit your room profile.",
+    artistMomentum: "3 institutional group shows in 18 months; collector waitlist expanding.",
     whyItMatches: [
       "Color temperature mirrors your warm-neutral palette.",
       "Scale anchors a primary seating wall without visual noise.",
@@ -84,7 +127,9 @@ export const artworks: Artwork[] = [
     fairValueHigh: 12600,
     fairValueScore: 89,
     matchScore: 91,
-    gradient: "from-zinc-100 via-slate-100 to-neutral-200",
+    image: "/dusk.png",
+    conciseReason: "Muted geometry supports a serene, investment-grade first acquisition.",
+    artistMomentum: "Sell-through rate above 78% across two recent primary market releases.",
     whyItMatches: [
       "Photographic geometry matches your preference for refined lines.",
       "Square format complements compact city-living layouts.",
@@ -100,17 +145,19 @@ export const artworks: Artwork[] = [
   },
   {
     id: "a3",
-    title: "Field Notes, Dusk",
+    title: "River Signal",
     artist: "Aya Mercier",
     year: "2022",
-    medium: "Oil and graphite on panel",
+    medium: "Mixed media on canvas",
     dimensions: '36" × 54"',
     askPrice: 23600,
     fairValueLow: 22100,
     fairValueHigh: 24800,
     fairValueScore: 94,
     matchScore: 93,
-    gradient: "from-rose-50 via-stone-100 to-neutral-300",
+    image: "/quiet-frequency.png",
+    conciseReason: "Color confidence adds distinction while preserving compositional balance.",
+    artistMomentum: "Recent museum acquisition and cross-market demand from design-led buyers.",
     whyItMatches: [
       "Textural layering maps to your calm-but-modern signal.",
       "Horizontal composition balances open-plan architecture.",
@@ -134,4 +181,22 @@ export const marketMetrics: MarketMetric[] = [
   { label: "Primary customer", value: "HENRY buyers" },
   { label: "MVP timeline", value: "4–6 weeks" },
   { label: "Budget", value: "Lean pre-seed estimate" },
+];
+
+export const competitiveRows: CompetitiveRow[] = [
+  {
+    category: "Match quality",
+    artmatch: "Explainable taste graph + room context",
+    incumbents: "Keyword browse and trend feeds",
+  },
+  {
+    category: "Price confidence",
+    artmatch: "Fair-value band with rationale",
+    incumbents: "Opaque list pricing",
+  },
+  {
+    category: "Execution",
+    artmatch: "Concierge-backed brokerage flow",
+    incumbents: "Self-serve inquiry threads",
+  },
 ];

@@ -1,18 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { styleSignals, type TasteProfile } from "../lib/artmatch-data";
+import {
+  budgetBands,
+  moodOptions,
+  paletteOptions,
+  roomOptions,
+  styleOptions,
+  styleSignals,
+  type TasteProfile,
+} from "../lib/artmatch-data";
 
 type OnboardingPanelProps = {
   profile: TasteProfile;
   onBudgetChange: (budgetBand: string) => void;
+  onPreferenceChange: (field: keyof TasteProfile, value: string) => void;
 };
-
-const budgetBands = ["$5k–$12k", "$12k–$30k", "$30k–$50k"];
 
 export function OnboardingPanel({
   profile,
   onBudgetChange,
+  onPreferenceChange,
 }: OnboardingPanelProps) {
   return (
     <section className="grid gap-6 rounded-3xl border border-black/10 bg-white p-6 shadow-[0_12px_40px_-22px_rgba(0,0,0,0.35)] lg:grid-cols-[1.3fr_1fr]">
@@ -42,9 +50,99 @@ export function OnboardingPanel({
       >
         <p className="text-sm font-medium text-black/70">{profile.roomType} profile</p>
         <div className="space-y-2 text-sm text-black/70">
+          <p>{profile.style}</p>
           <p>{profile.palette}</p>
           <p>{profile.mood}</p>
-          <p>{profile.collectorType}</p>
+        </div>
+        <div className="space-y-2">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-black/55">Style</p>
+          <div className="flex flex-wrap gap-2">
+            {styleOptions.map((option) => {
+              const active = profile.style === option.value;
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => onPreferenceChange("style", option.value)}
+                  className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+                    active
+                      ? "border-black bg-black text-white"
+                      : "border-black/10 bg-white text-black/75 hover:border-black/30"
+                  }`}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className="space-y-2">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-black/55">Palette</p>
+          <div className="flex flex-wrap gap-2">
+            {paletteOptions.map((option) => {
+              const active = profile.palette === option.value;
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => onPreferenceChange("palette", option.value)}
+                  className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+                    active
+                      ? "border-black bg-black text-white"
+                      : "border-black/10 bg-white text-black/75 hover:border-black/30"
+                  }`}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className="space-y-2">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-black/55">Mood</p>
+          <div className="flex flex-wrap gap-2">
+            {moodOptions.map((option) => {
+              const active = profile.mood === option.value;
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => onPreferenceChange("mood", option.value)}
+                  className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+                    active
+                      ? "border-black bg-black text-white"
+                      : "border-black/10 bg-white text-black/75 hover:border-black/30"
+                  }`}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className="space-y-2">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-black/55">
+            Primary room
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {roomOptions.map((option) => {
+              const active = profile.roomType === option.value;
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => onPreferenceChange("roomType", option.value)}
+                  className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+                    active
+                      ? "border-black bg-black text-white"
+                      : "border-black/10 bg-white text-black/75 hover:border-black/30"
+                  }`}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
         <div className="space-y-2 pt-2">
           <p className="text-xs font-medium uppercase tracking-[0.18em] text-black/55">

@@ -32,6 +32,8 @@ export type Artwork = {
   artist: string;
   image_url: string;
   price_range: [number, number];
+  price_eur: number;
+  valuation_range: [number, number];
   fair_value_score: number;
   momentum_score: number;
   medium: string;
@@ -40,6 +42,8 @@ export type Artwork = {
   embedding: number[];
   auction_comp: string;
   rationale: string[];
+  style_tags: string[];
+  match_explanation: string;
 };
 
 export type Recommendation = {

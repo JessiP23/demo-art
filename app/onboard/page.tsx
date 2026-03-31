@@ -1,102 +1,88 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { AuthGuard } from "@/components/auth-guard";
 import { PageShell } from "@/components/page-shell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { defaultTasteProfile, tasteDimensions } from "@/lib/mock-data";
-import { dbApi } from "@/lib/mock-db";
-import type { TasteDimension, TasteProfile } from "@/lib/types";
-import { useAuthStore } from "@/stores/auth-store";
+import { useAppStore, type TasteOption } from "@/stores/app-store";
 
-const labels: Record<TasteDimension, string> = {
-  minimalism: "Minimalism",
-  colorIntensity: "Color intensity",
-  figurativeVsAbstract: "Figurative vs abstract",
-  classicVsContemporary: "Classic vs contemporary",
-  textureAffinity: "Texture affinity",
-  scalePreference: "Scale preference",
-  riskAppetite: "Risk appetite",
-  warmVsCoolPalette: "Warm vs cool palette",
-  narrativeDepth: "Narrative depth",
-  linearity: "Linearity",
-  collectorConfidence: "Collector confidence",
-  investmentIntent: "Investment intent",
-};
+const tasteOptions: TasteOption[] = [
+  { id: "minimal", label: "Quiet Minimal", tags: ["minimal", "monochrome"], image: "/7.png" },
+  { id: "geometric", label: "Geometric Order", tags: ["geometric", "structured"], image: "/2.png" },
+  { id: "layered", label: "Layered Abstraction", tags: ["layered", "textural"], image: "/8.png" },
+  { id: "dramatic", label: "Dramatic Contrast", tags: ["dark-toned", "bold"], image: "/4.png" },
+  { id: "narrative", label: "Narrative Image", tags: ["narrative", "photography"], image: "/1.png" },
+  { id: "architectural", label: "Architectural Line", tags: ["architectural", "linear"], image: "/5.png" },
+  { id: "expressive", label: "Expressive Color", tags: ["high-chroma", "expressive"], image: "/6.png" },
+  { id: "sculptural", label: "Sculptural Form", tags: ["sculpture", "material-driven"], image: "/sculpture-1.png" },
+  { id: "organic", label: "Organic Shapes", tags: ["organic", "textural"], image: "/sculpture-3.png" },
+  { id: "balanced", label: "Muted Balance", tags: ["muted", "balanced"], image: "/9.png" },
+];
 
 export default function OnboardPage() {
   const router = useRouter();
-  const { user, refresh } = useAuthStore();
-  const [index, setIndex] = useState(0);
-  const [values, setValues] = useState<TasteProfile>(user?.taste_profile ?? defaultTasteProfile);
+  const { userTaste, toggleTaste } = useAppStore();
 
-  const dimension = tasteDimensions[index];
+  const selectedCount = userTaste.length;
 
-  const updateValue = (delta: number) => {
-    const current = values[dimension];
-    const next = Math.max(0, Math.min(100, current + delta));
-    setValues((state) => ({ ...state, [dimension]: next }));
-  };
-
-  const saveProfile = () => {
-    if (!user) return;
-    dbApi.updateTasteProfile(user.id, values);
-    refresh();
+  const continueFlow = () => {
     router.push("/recommendations");
   };
 
   return (
-    <AuthGuard>
-      <PageShell
-        title="Taste onboarding"
-        subtitle="Swipe-style calibration across 12 dimensions for explainable matching."
-      >
-        <Card className="mx-auto w-full max-w-2xl">
-          <CardContent className="space-y-5">
-            <p className="text-xs uppercase tracking-[0.18em] text-black/55">
-              Dimension {index + 1} of {tasteDimensions.length}
-            </p>
-            <motion.div
-              key={dimension}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.25 }}
-              className="rounded-2xl border border-black/10 p-5"
+    <PageShell
+      title="Build your Taste Graph"
+      subtitle="Select 5–10 preference cards. The engine uses these signals to produce a finite high-confidence shortlist."
+      action={
+        <Button size="sm" onClick={continueFlow} disabled={selectedCount < 5}>
+          View Curated Results
+        </Button>
+      }
+    >
+      <Card>
+        <CardContent className="flex flex-wrap items-center justify-between gap-3 p-5">
+          <p className="text-xs uppercase tracking-[0.16em] text-black/55">
+            Selected {selectedCount} / 10
+          </p>
+          <p className="font-mono text-xs text-black/65">Minimum signal required: 5 preferences</p>
+        </CardContent>
+      </Card>
+      <div className="grid gap-4 md:grid-cols-2">
+        {tasteOptions.map((option, idx) => {
+          const selected = userTaste.includes(option.id);
+          return (
+            <motion.button
+              key={option.id}
+              type="button"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: idx * 0.04 }}
+              whileHover={{ scale: 1.015 }}
+              onClick={() => toggleTaste(option.id)}
+              className={`overflow-hidden rounded-[1.4rem] border text-left transition ${
+                selected ? "border-black bg-black text-white" : "border-black/12 bg-white text-black"
+              }`}
             >
-              <h2 className="text-2xl font-semibold tracking-tight">{labels[dimension]}</h2>
-              <p className="mt-2 text-sm text-black/65">
-                Current intensity: {values[dimension]} / 100
-              </p>
-              <div className="mt-4 flex gap-2">
-                <Button variant="secondary" onClick={() => updateValue(-10)}>
-                  Swipe Left
-                </Button>
-                <Button onClick={() => updateValue(10)}>Swipe Right</Button>
+              <div className="relative aspect-[16/10] w-full">
+                <Image src={option.image} alt={option.label} fill className="object-cover" />
               </div>
-            </motion.div>
-            <div className="flex flex-wrap gap-2">
-              <Button
-                variant="secondary"
-                onClick={() => setIndex((current) => Math.max(0, current - 1))}
-                disabled={index === 0}
-              >
-                Previous
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={() => setIndex((current) => Math.min(tasteDimensions.length - 1, current + 1))}
-                disabled={index === tasteDimensions.length - 1}
-              >
-                Next
-              </Button>
-              <Button onClick={saveProfile}>Save taste profile</Button>
-            </div>
-          </CardContent>
-        </Card>
-      </PageShell>
-    </AuthGuard>
+              <div className="space-y-2 p-5">
+                <p className="text-lg font-semibold tracking-tight">{option.label}</p>
+                <p className={`text-xs uppercase tracking-[0.14em] ${selected ? "text-white/75" : "text-black/55"}`}>
+                  {option.tags.join(" · ")}
+                </p>
+              </div>
+            </motion.button>
+          );
+        })}
+      </div>
+      <div className="flex justify-end">
+        <Button onClick={continueFlow} disabled={selectedCount < 5}>
+          Continue to curated results
+        </Button>
+      </div>
+    </PageShell>
   );
 }

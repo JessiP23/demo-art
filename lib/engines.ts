@@ -37,14 +37,62 @@ export function buildRecommendations(
     .sort((a, b) => b.match_score - a.match_score);
 }
 
+export function buildCuratedRecommendations({
+  tasteTags,
+  artworks,
+  limit = 5,
+}: {
+  tasteTags: string[];
+  artworks: Artwork[];
+  limit?: number;
+}) {
+  const normalizedTaste = tasteTags.map((entry) => entry.toLowerCase());
+  return artworks
+    .map((artwork) => {
+      const tagHits = artwork.style_tags.filter((tag) =>
+        normalizedTaste.some((taste) => tag.toLowerCase().includes(taste)),
+      ).length;
+      const matchScore = Math.min(
+        97,
+        Math.max(72, artwork.fair_value_score - 8 + artwork.momentum_score * 0.25 + tagHits * 4),
+      );
+      return {
+        artwork,
+        matchScore: Math.round(matchScore),
+      };
+    })
+    .sort((a, b) => b.matchScore - a.matchScore)
+    .slice(0, limit);
+}
+
 export function fairValueBand(artwork: Artwork) {
-  const [low, high] = artwork.price_range;
-  const spread = Math.max(800, Math.round((high - low) * 0.18));
+  const [low, high] = artwork.valuation_range;
+  const spread = Math.max(500, Math.round((high - low) * 0.12));
   return {
-    low: low - spread,
+    low: Math.max(1000, low - spread),
     high: high + spread,
     confidence: Math.min(98, artwork.fair_value_score + 2),
   };
+}
+
+export function fairValueStatus(artwork: Artwork) {
+  const [low, high] = artwork.valuation_range;
+  if (artwork.price_eur < low) return "Undervalued";
+  if (artwork.price_eur > high) return "Overpriced";
+  return "Fairly priced";
+}
+
+export function valuationConfidence(score: number) {
+  if (score >= 90) return "High";
+  if (score >= 80) return "Medium";
+  return "Low";
+}
+
+export function buildMomentumSeries(score: number) {
+  const base = Math.max(35, Math.min(95, score - 12));
+  return Array.from({ length: 8 }).map((_, idx) =>
+    Math.max(25, Math.min(99, Math.round(base + idx * 2 + (idx % 2 === 0 ? 2 : -1)))),
+  );
 }
 
 export function artistMomentumLabel(score: number) {

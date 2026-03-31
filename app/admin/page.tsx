@@ -17,6 +17,8 @@ const emptyArtwork: Artwork = {
   artist: "",
   image_url: "/contour-ocre.png",
   price_range: [10000, 14000],
+  price_eur: 12000,
+  valuation_range: [10500, 13200],
   fair_value_score: 80,
   momentum_score: 75,
   medium: "Acrylic on canvas",
@@ -25,6 +27,8 @@ const emptyArtwork: Artwork = {
   embedding: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
   auction_comp: "Primary and secondary comps are stable.",
   rationale: ["Balanced profile fit for first-time collector confidence."],
+  style_tags: ["abstraction", "balanced"],
+  match_explanation: "Matches a balanced contemporary taste profile.",
 };
 
 export default function AdminPage() {

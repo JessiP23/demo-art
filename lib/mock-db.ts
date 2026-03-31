@@ -20,7 +20,7 @@ type DB = {
   transactions: Transaction[];
 };
 
-const DB_KEY = "artmatch_db_v1";
+const DB_KEY = "artmatch_db_v2";
 
 const starter: DB = {
   users: [seedUser],
@@ -46,9 +46,12 @@ export function readDB(): DB {
   const stored = JSON.parse(raw) as DB;
   const artworkMap = new Map(stored.artworks.map((artwork) => [artwork.id, artwork]));
   for (const artwork of artworksSeed) {
-    if (!artworkMap.has(artwork.id)) {
+    const existing = artworkMap.get(artwork.id);
+    if (!existing) {
       stored.artworks.push(artwork);
+      continue;
     }
+    Object.assign(existing, artwork);
   }
   window.localStorage.setItem(DB_KEY, JSON.stringify(stored));
   return stored;

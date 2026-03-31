@@ -2,21 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
-import { useAuthStore } from "@/stores/auth-store";
 
 const nav = [
   { href: "/", label: "Home" },
-  { href: "/recommendations", label: "Recommendations" },
-  { href: "/concierge", label: "Concierge" },
-  { href: "/profile", label: "Profile" },
-  { href: "/admin", label: "Admin" },
+  { href: "/onboard", label: "Taste Profile" },
+  { href: "/recommendations", label: "Curated Results" },
+  { href: "/audit", label: "Value Audit" },
 ];
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const { user, logout } = useAuthStore();
 
   return (
     <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--background)]/95 backdrop-blur">
@@ -38,17 +34,9 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-2">
-          {user ? (
-            <Button variant="secondary" size="sm" onClick={logout}>
-              Logout
-            </Button>
-          ) : (
-            <Link href="/auth">
-              <Button size="sm">Login</Button>
-            </Link>
-          )}
-        </div>
+        <Link href="/onboard" className="text-xs uppercase tracking-[0.15em] text-black/60 hover:text-black">
+          Start
+        </Link>
       </div>
     </header>
   );
